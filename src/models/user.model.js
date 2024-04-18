@@ -19,7 +19,7 @@ const userSchema = new mongoose.Schema({
         required: true
     } 
 }, {
-    timespamps: true
+    timestamps: true
 } //este último objeto es para que se guarden las fechas de creación de los usuarios
 )
 
