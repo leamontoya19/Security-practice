@@ -1,7 +1,7 @@
 import Post from '../models/post.model.js'
 
 export const getPosts = async (req,res)=>{
-   const posts = await Post.find()
+   const posts = await Post.find(); //para que me traiga todos los post del blog.
    res.json(posts)
 };
 
@@ -11,7 +11,8 @@ export const createPost = async (req,res)=>{
         title,
         description,
         image,
-        date
+        date,
+        user: req.user.id
     })
    const savedPost = await newPost.save()
    res.json (savedPost)
@@ -34,5 +35,5 @@ export const updatePost = async (req,res)=>{
 export const deletePost = async (req,res)=>{
     const postDeleted = await Post.findByIdAndDelete(req.params.id) 
     if (!postDeleted)return res.status(404).json({message: 'Post not found'})
-    res.json(postDeleted)
+    return res.sendStatus(204) //todo estuvo bien pero no devuelve nada
 };
