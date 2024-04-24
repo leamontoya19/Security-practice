@@ -1,19 +1,21 @@
 import { useForm } from 'react-hook-form'; //esta depe ayuda y facilita el uso de hooks
-import { registerReq } from '../api/auth.js'
+import { useAuth } from '../context/AuthContext';
 // import { Link } from 'react-router-dom';
 // import axios from 'axios';
 
 function Register() {
-  const {register,handleSubmit} = useForm()
+  const {register,handleSubmit} = useForm();
+  const { signup, user } = useAuth();
+  console.log(user)
+  
+  const onSubmit = handleSubmit(async (values) =>{
+    signup(values);
+    });
 
   return (
     <div className='auth'>
       <form 
-      onSubmit={handleSubmit(async (values) =>{
-        console.log(values);
-        const res = await registerReq(values)
-        console.log(res);
-      })}>
+      onSubmit={onSubmit}>
 
         <input 
         type="text" 
