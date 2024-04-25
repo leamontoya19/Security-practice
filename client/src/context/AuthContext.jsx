@@ -15,16 +15,23 @@ export const useAuth = () =>{
 
 export const AuthProvider = ({children}) => {
     const [user, setUser] = useState(null) //este es el usuario que podrá ser leido en toda la aplicación
-    
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const [errors, setErrors] = useState([]);
+
 //En esta función signup es donde se reciben los datos del 
 //usuario registrado, esta funcion recibe un user que recibe la pedición que ya teniamos en Register.jsx, 
 //corto y pego
     const signup = async (user) => {
-        const res = await registerReq(user);
-        console.log(res.data);
-        setUser(res.data)
-
-    }
+        try {
+            const res = await registerReq(user);
+            console.log(res.data);
+            setUser(res.data);
+            setIsAuthenticated(true);
+        }catch (error){
+            console.log(error.response)
+            setErrors(error.response.data);
+        };
+    };
 
 
     return (
@@ -32,6 +39,8 @@ export const AuthProvider = ({children}) => {
         value={{
             signup,
             user,
+            isAuthenticated,
+            errors,
         }}
         >
             {children} 

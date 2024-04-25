@@ -22,6 +22,12 @@ $lightGreen : #b9e7e7;
         height: 100vh;
         background-color: $lightGreen;
 
+        .errors{
+            background-color: red;
+            color: white;
+
+        }
+
         h1{
             font-size: 20px;
             color: teal;

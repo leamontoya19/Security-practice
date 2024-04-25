@@ -1,12 +1,18 @@
 import { useForm } from 'react-hook-form'; //esta depe ayuda y facilita el uso de hooks
 import { useAuth } from '../context/AuthContext';
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 // import { Link } from 'react-router-dom';
 // import axios from 'axios';
 
 function Register() {
-  const {register,handleSubmit} = useForm();
-  const { signup, user } = useAuth();
-  console.log(user)
+  const {register,handleSubmit, formState:{errors},} = useForm();
+  const { signup, isAuthenticated, errors: registerErrors} = useAuth();
+  const navigate = useNavigate()
+
+  useEffect(() =>{
+    if (isAuthenticated) navigate('/')
+  }, [isAuthenticated]);
   
   const onSubmit = handleSubmit(async (values) =>{
     signup(values);
@@ -14,6 +20,14 @@ function Register() {
 
   return (
     <div className='auth'>
+    {/* Configuración del mensaje de error que se muestra(registererror) */}
+      {
+        registerErrors.map((error, i) => (
+          <div className='errors' key={i}>
+            {error}
+          </div>
+        ))
+      }
       <form 
       onSubmit={onSubmit}>
 
@@ -23,6 +37,9 @@ function Register() {
         name='username'
         {...register('username', { required:true })} 
         />
+        {errors.username && (
+        <p> Username is required</p>
+        )}
 
         <input 
         type="email" 
@@ -30,6 +47,9 @@ function Register() {
         name='email'
         {...register('email', { required:true })} 
         />
+        {errors.email && (
+        <p> Email is required</p>
+        )}
 
         <input 
         type="password" 
@@ -37,6 +57,9 @@ function Register() {
         name='password'
         {...register('password', { required:true })} 
         />
+        {errors.password && (
+          <p> Password is required</p>
+          )}
 
         <button 
         type='submit'>
