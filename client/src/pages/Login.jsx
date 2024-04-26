@@ -1,5 +1,6 @@
 import { useForm } from 'react-hook-form';
 import { useAuth } from '../context/AuthContext';
+import { Link } from 'react-router-dom';
 
 
 function Login () {
@@ -49,6 +50,9 @@ function Login () {
         </button>
 
       </form> 
+      <p>Not signed up yet? 
+        <Link to="/register">Join us</Link>
+      </p>
     </div>
 
   );

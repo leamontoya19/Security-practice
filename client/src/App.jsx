@@ -10,6 +10,8 @@ import Navbar from "./components/Navbar"
 import Footer from "./components/Footer"
 import "./style.scss"
 
+import ProtectedRoute from "./ProtectedRoute";
+
 
 //3)Setting Layout
 const Layout = () => {
@@ -34,11 +36,13 @@ const router = createBrowserRouter([
       },
       {
         path: "/post/:id",
-        element: <Single/>
+        element: <Single/>,
+        element:<ProtectedRoute/>
       },
       {
         path: "/write",
-        element: <Write/>
+        element: <Write/>,
+        element:<ProtectedRoute/>
       },
     ]
   },

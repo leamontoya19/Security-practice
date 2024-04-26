@@ -10,6 +10,7 @@ import postsRoutes from './routes/posts.routes.js'
 const app = express();
 app.use(cors({
     origin:'http://localhost:5173',
+    credentials: true //para que cors tenga acceso a las credenciales y así se pueda guardar el token en las cookies.
 }));
 app.use(morgan('dev'));
 app.use( express.json()); //para que express lea el json (body)

@@ -1,7 +1,7 @@
 import { useForm } from 'react-hook-form'; //esta depe ayuda y facilita el uso de hooks
 import { useAuth } from '../context/AuthContext';
 import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link} from 'react-router-dom';
 
 
 function Register() {
@@ -67,6 +67,9 @@ function Register() {
         </button>
 
       </form> 
+      <p>Already have an account?
+        <Link to="/login">Login</Link>
+      </p>
     </div>
 
   );
