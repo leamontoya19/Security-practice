@@ -1,15 +1,19 @@
 import { useForm } from 'react-hook-form';
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from '../context/AuthContext'
 import { Link } from 'react-router-dom';
+
 
 
 function Login () {
   const { register, handleSubmit, formState: { errors }, } = useForm();
-  const {signin, errors: signinErrors} =useAuth();
+  const {signin, errors: signinErrors, isAuthenticated} =useAuth();
+ 
   
+
   const onSubmit = handleSubmit((data) =>{
     signin(data);
-  })
+  });
+
 
   return (
     <div className='auth'>

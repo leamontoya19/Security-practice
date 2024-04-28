@@ -17,7 +17,7 @@ export const AuthProvider = ({children}) => {
     const [user, setUser] = useState(null) //USUARIO GLOBAL: el usuario que podrá ser leido en toda la aplicación.
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [errors, setErrors] = useState([]);
-    const [loading, setLoading] = useState(true); //lo ponemos en true para que siempre esté cargando
+     const [loading, setLoading] = useState(true); //lo ponemos en true para que siempre esté cargando
 
     //usuario registrado
     const signup = async (user) => {
@@ -38,17 +38,17 @@ export const AuthProvider = ({children}) => {
             const res = await loginReq(user);
             console.log(res);
             setUser(res.data);
-            setIsAuthenticated(true); 
+            setIsAuthenticated(true);
         }catch (error){
              console.log(error);
               if (Array.isArray(error.response.data)){
                   return setErrors(error.response.data)
               }
-              setErrors(error.response.data.message);  
+              setErrors(error.response.data.message);
         };
     };
 
-    
+
     //Timer para limpiar mensaje de error
       useEffect(() => {
          if (errors.length > 0){
@@ -60,22 +60,26 @@ export const AuthProvider = ({children}) => {
 
      }, [errors]);
 
-    //consulta y verificación de token
-     useEffect(() =>{
-        const checkLogin= async () => {
+    //rutas protegidas: consulta y verificación de token
+    useEffect(() =>{
+        async function checkLogin () {
           const cookies =  Cookies.get();
-
+          
             if(!cookies.token) {
                  setIsAuthenticated(false);
                  setLoading(false);
-                 return;
+                 return setUser(null);
+                 
               }
-             
+
              try {
                 const res =  await verifyTokenReq(cookies.token);
                 console.log(res)
-                if (!res.data) return setIsAuthenticated(false);
-                
+                if (!res.data) {
+                    setIsAuthenticated(false);
+                    setLoading(false);
+                    return;
+                }
                 setIsAuthenticated(true);
                 setUser(res.data);
                 setLoading(false);
@@ -83,16 +87,17 @@ export const AuthProvider = ({children}) => {
                 console.log(error);
                 setIsAuthenticated(false);
                 setLoading(false);
-                }    
-             
+                }
+                
+
         }
         checkLogin()
-     }, []);
+    }, []);
 
 
 
     return (
-        <AuthContext.Provider 
+        <AuthContext.Provider
         value={{
             signup,
             signin,
@@ -102,7 +107,7 @@ export const AuthProvider = ({children}) => {
             errors,
         }}
         >
-            {children} 
+            {children}
         </AuthContext.Provider>
     );
 };

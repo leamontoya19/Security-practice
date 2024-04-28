@@ -34,15 +34,15 @@ const router = createBrowserRouter([
         path: "/",
         element: <Home/>
       },
+
       {
         path: "/post/:id",
-        element: <Single/>,
-        element:<ProtectedRoute/>
+        element: <ProtectedRoute path="/post/:id" component={Single}/>
       },
+
       {
         path: "/write",
-        element: <Write/>,
-        element:<ProtectedRoute/>
+        element: <ProtectedRoute path="/write" component={Write}/>
       },
     ]
   },
@@ -54,14 +54,7 @@ const router = createBrowserRouter([
     path: "/login",
     element: <Login/>,
   },
-  // {
-  //   path: "/write",
-  //   element: <Write/>,
-  // },
-  // {
-  //   path: "/single",
-  //   element: <Single/>,
-  // },
+
 ]);
 
 
