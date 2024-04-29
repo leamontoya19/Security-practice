@@ -1,19 +1,38 @@
-import React from 'react'
 import { useState } from 'react';
-import ReactQuill from 'react-quill'; //library to write down and make the input to the blog
+//import ReactQuill from 'react-quill'; //library to write down and make the input to the blog
 import 'react-quill/dist/quill.snow.css';
+import { usePosts } from '../context/PostsContext';
+import { useForm } from 'react-hook-form';
+
 
 const Write = () => {
-  const [value, setValue] = useState('')
+  //const { value, setValue } = useState('');
+  const { register, handleSubmit } = useForm();
+  const { createPost } = usePosts();
+  
+  //guarda los posts hechos
+   const onSubmit = handleSubmit((data) => {
+     createPost(data);
+   });
   
   return (
     <div className='add'>
-      <div className="content">
-        <input type="text" placeholder='Title' />
+      <form className="content" onSubmit={onSubmit}>
+        <input 
+        type="text" 
+        placeholder='Title' 
+        name='title'
+        {...register("title")}
+        autoFocus 
+        />
         <div className="editorContainer">
-        <ReactQuill theme="snow" value={value} onChange={setValue} />
+        <textarea
+        name='description'
+        {...register("description")} 
+        />
         </div>
-      </div>
+        <button>save</button>
+      </form>
       <div className="menu">
         <div className="item">
           <h1>Publish</h1>
@@ -23,7 +42,7 @@ const Write = () => {
           <span>
             <b>Visibility:</b>Public
           </span>
-          <input style={{display: 'none'}} type="file" id='file'  name=''/>
+          <input style={{display: 'none'}} type="file" id='file'  name='image'/>
           <label htmlFor="file">Upload Image</label>
           <div className="buttons">
             <button>Save as a draft</button>

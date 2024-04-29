@@ -11,6 +11,7 @@ import Footer from "./components/Footer"
 import "./style.scss"
 
 import ProtectedRoute from "./ProtectedRoute";
+import { PostProvider } from "./context/PostsContext";
 
 
 //3)Setting Layout
@@ -42,7 +43,7 @@ const router = createBrowserRouter([
 
       {
         path: "/write",
-        element: <ProtectedRoute path="/write" component={Write}/>
+        element: <Write/>
       },
     ]
   },
@@ -63,7 +64,9 @@ function App() {
     <div className="app">
       <div className="container">
         <AuthProvider>
-        <RouterProvider router={router} />
+          <PostProvider>
+            <RouterProvider router={router} />
+          </PostProvider>
         </AuthProvider>
       </div>
     </div>
