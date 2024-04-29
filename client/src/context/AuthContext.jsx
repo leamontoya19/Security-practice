@@ -48,6 +48,14 @@ export const AuthProvider = ({children}) => {
         };
     };
 
+    //cerrar sesión
+    //como tengo cookies puedo cerrar sesio´n directamente desde el front
+    const logout = () => {
+        Cookies.remove("token");
+        setIsAuthenticated(false);
+        setUser(null);
+    }
+
 
     //Timer para limpiar mensaje de error
       useEffect(() => {
@@ -94,8 +102,7 @@ export const AuthProvider = ({children}) => {
         checkLogin()
     }, []);
 
-
-
+   
     return (
         <AuthContext.Provider
         value={{
@@ -105,6 +112,7 @@ export const AuthProvider = ({children}) => {
             user,
             isAuthenticated,
             errors,
+            logout,
         }}
         >
             {children}

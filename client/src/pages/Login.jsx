@@ -1,15 +1,17 @@
 import { useForm } from 'react-hook-form';
 import { useAuth } from '../context/AuthContext';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import ReCAPTCHA from 'react-google-recaptcha';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+
 
 
 function Login () {
   const { register, handleSubmit, formState: { errors }, } = useForm();
   const {signin, errors: signinErrors, isAuthenticated} =useAuth();
   const [isRecaptchaCompleted, setRecaptchaCompleted] =useState(false);
-
+  const navigate = useNavigate();
+  
   const onChangeRecaptcha = () => { 
     setRecaptchaCompleted(true);
   };
@@ -21,6 +23,11 @@ function Login () {
       alert("Please, complete the ReCAPTCHA");
     }
   });
+
+  //Navegación una vez inicia sesión
+  useEffect(() => {
+    if (isAuthenticated) navigate('/');
+  }, [isAuthenticated])
 
 
   return (

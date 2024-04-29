@@ -9,7 +9,7 @@ const router = Router()
 //Rutas de CRUD POST
 router.get('/posts', authRequired, getPosts)
 router.get('/posts/:id', authRequired, getPost) //obtener una solo post por id
-router.post('/posts', authRequired, validateSchema(createPostSchema), createPost)
+router.post('/post', authRequired, validateSchema(createPostSchema), createPost)
 router.delete('/posts/:id', authRequired, deletePost)
 router.put('/posts/:id', authRequired, updatePost) //pra actualizar post
 

@@ -1,18 +1,36 @@
-import { useState } from 'react';
 //import ReactQuill from 'react-quill'; //library to write down and make the input to the blog
 import 'react-quill/dist/quill.snow.css';
 import { usePosts } from '../context/PostsContext';
 import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import axios from '../api/axios.js'
 
 
 const Write = () => {
   //const { value, setValue } = useState('');
   const { register, handleSubmit } = useForm();
   const { createPost } = usePosts();
+  const navigate = useNavigate()
+  const [ file, setFile] = useState(null);
+
+  //subir imágines a la DB
+  const upload = async() => {
+    try {
+      const formData = new FormData();
+      formData.append("file", file)
+      const res = await axios.post("/upload", formData)
+    } catch (err) {
+      console.log(err)
+    }
+  }
   
   //guarda los posts hechos
    const onSubmit = handleSubmit((data) => {
      createPost(data);
+     upload()
+     navigate('/posts')
+     
    });
   
   return (
@@ -31,7 +49,9 @@ const Write = () => {
         {...register("description")} 
         />
         </div>
-        <button>save</button>
+
+        <button>Post</button>
+
       </form>
       <div className="menu">
         <div className="item">
