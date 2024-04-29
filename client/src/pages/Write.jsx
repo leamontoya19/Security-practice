@@ -1,10 +1,10 @@
 //import ReactQuill from 'react-quill'; //library to write down and make the input to the blog
-import 'react-quill/dist/quill.snow.css';
+//import 'react-quill/dist/quill.snow.css';
 import { usePosts } from '../context/PostsContext';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
-import axios from '../api/axios.js'
+//import { useState } from 'react';
+
 
 
 const Write = () => {
@@ -12,18 +12,18 @@ const Write = () => {
   const { register, handleSubmit } = useForm();
   const { createPost } = usePosts();
   const navigate = useNavigate()
-  const [ file, setFile] = useState(null);
+  //const [ file, setFile] = useState(null);
 
   //subir imágines a la DB
-  const upload = async() => {
-    try {
-      const formData = new FormData();
-      formData.append("file", file)
-      const res = await axios.post("/upload", formData)
-    } catch (err) {
-      console.log(err)
-    }
-  }
+  // const upload = async() => {
+  //   try {
+  //     const formData = new FormData();
+  //     formData.append("file", file)
+  //     const res = await axios.post("/upload", formData)
+  //   } catch (err) {
+  //     console.log(err)
+  //   }
+  // }
   
   //guarda los posts hechos
    const onSubmit = handleSubmit((data) => {

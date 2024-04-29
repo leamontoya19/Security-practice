@@ -3,6 +3,7 @@ import express from 'express';
 import morgan from 'morgan';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
+import { FRONTEND_URL} from './config.js'
 import multer from 'multer';
 
 import authRoutes from './routes/auth.routes.js'
@@ -11,7 +12,7 @@ import postsRoutes from './routes/posts.routes.js'
 const app = express();
 
 app.use(cors({
-    origin:'http://localhost:5173',
+    origin: FRONTEND_URL,
     credentials: true //para que cors tenga acceso a las credenciales y así se pueda guardar el token en las cookies.
 }));
 app.use(morgan('dev'));
